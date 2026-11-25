@@ -1,4 +1,4 @@
-import MenuClient from "./MenuClient";
+import MenuClient from "../MenuClient";
 import {getDb} from "@/lib/db";
 
 export const dynamic = "force-dynamic";
