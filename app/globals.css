@@ -162,3 +162,39 @@ html,body{max-width:100%;overflow-x:hidden}
  .admin-mobile-dock button.active{background:#e7bd60;color:#201a0d}
  .admin-mobile-dock button span{line-height:1.2}
 }
+
+
+/* Social links in the public menu footer */
+.menu-footer{flex-wrap:wrap}
+.menu-footer-copy{flex:1;min-width:150px}
+.menu-social{margin-top:12px;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.menu-social>span{font-size:10px;color:#8d8069}
+.menu-social-icons{display:flex;align-items:center;gap:8px}
+.menu-social-icons a{width:34px;height:34px;border:1px solid #e5d8bd;border-radius:50%;display:grid;place-items:center;color:#9a742d;background:#fff;transition:.18s}
+.menu-social-icons a:hover{background:#191814;color:#f3d28a;border-color:#191814}
+.admin-social-settings{margin:22px 0;padding:18px;border:1px solid #eee6d8;border-radius:15px;background:#fdfbf7}
+.admin-social-settings h3{margin:0 0 7px;font-size:14px}
+.admin-social-settings .admin-muted{margin:0 0 12px}
+.admin-mobile-dock{display:none}
+@media(max-width:760px){
+ .admin-dashboard-page{padding:12px 0 105px}
+ .admin-shell{width:calc(100% - 20px)}
+ .admin-topbar{padding:12px 13px;border-radius:16px}
+ .admin-brand-logo{width:46px;height:46px}
+ .admin-brand b{font-size:14px}
+ .admin-brand small{font-size:9px}
+ .admin-nav{display:none}
+ .admin-mobile-dock{position:fixed;z-index:50;display:flex;right:0;left:0;bottom:0;gap:3px;overflow-x:auto;overflow-y:hidden;padding:8px 7px max(8px,env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e9e1d3;box-shadow:0 -8px 25px #21180515;backdrop-filter:blur(14px);scrollbar-width:none}
+ .admin-mobile-dock::-webkit-scrollbar{display:none}
+ .admin-mobile-dock button{flex:1 0 62px;min-width:62px;min-height:55px;border:0;border-radius:11px;background:transparent;color:#857a66;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:9px;font-weight:700;white-space:nowrap}
+ .admin-mobile-dock button.active{background:#211e17;color:#f2d28b}
+ .admin-dashboard-page .admin-stats{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px}
+ .admin-dashboard-page .admin-stats .card{padding:12px 9px;min-height:90px}
+ .admin-dashboard-page .admin-stats .card span{font-size:9px;line-height:1.5}
+ .admin-dashboard-page .admin-stats .card h1{font-size:23px;margin-top:9px}
+ .admin-dashboard-page .card{padding:16px;border-radius:15px}
+ .admin-dashboard-page h2{font-size:15px}
+ .admin-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+ .admin-table{min-width:720px}
+ .report-filters{grid-template-columns:1fr!important}
+}
