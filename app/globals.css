@@ -255,3 +255,117 @@ html,body{max-width:100%;overflow-x:hidden}
  .admin-dashboard-page .admin-stats .card h1{overflow-wrap:anywhere}
  .admin-table-wrap{max-width:100%;overscroll-behavior-x:contain}
 }
+
+
+/* Mobile-first sizing for all admin controls, especially native date inputs */
+@media (max-width: 760px) {
+  .admin-dashboard-page,
+  .admin-dashboard-page *,
+  .admin-login-page,
+  .admin-login-page * { box-sizing: border-box; }
+
+  .admin-dashboard-page .card,
+  .admin-dashboard-page .report-filters,
+  .admin-dashboard-page .report-filters > *,
+  .admin-dashboard-page .report-filters label {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .admin-dashboard-page .report-filters {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .admin-dashboard-page .report-filters label {
+    display: block;
+    width: 100%;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .admin-dashboard-page input.field,
+  .admin-dashboard-page select.field,
+  .admin-dashboard-page textarea.field,
+  .admin-login-page input.field {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    margin: 6px 0 12px;
+    border-radius: 11px;
+    font-size: 16px;
+    line-height: 1.35;
+    box-sizing: border-box;
+  }
+
+  .admin-dashboard-page .report-filters input[type="date"] {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 48px;
+    padding: 9px 10px;
+    direction: ltr;
+    text-align: left;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .admin-dashboard-page .report-filters .primary,
+  .admin-dashboard-page .report-actions button,
+  .admin-dashboard-page .admin-form-actions button,
+  .admin-dashboard-page .category-create button,
+  .admin-dashboard-page .admin-category-row button,
+  .admin-login-page button {
+    min-height: 44px;
+    max-width: 100%;
+    touch-action: manipulation;
+  }
+
+  .admin-dashboard-page .report-filters .primary {
+    grid-column: auto;
+    width: 100%;
+    margin-top: 2px;
+  }
+
+  .admin-dashboard-page .report-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .admin-dashboard-page .report-actions button {
+    min-width: 0;
+    width: 100%;
+    padding-inline: 10px;
+    white-space: normal;
+  }
+
+  .admin-dashboard-page .admin-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+
+  .admin-dashboard-page .admin-form-actions button { flex: 1 1 140px; }
+
+  .admin-dashboard-page .admin-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .admin-dashboard-page .card { padding: 13px !important; }
+  .admin-dashboard-page .report-filters { gap: 10px; }
+  .admin-dashboard-page .report-actions { grid-template-columns: minmax(0, 1fr); }
+  .admin-dashboard-page .report-filters input[type="date"] {
+    padding-inline: 8px;
+    font-size: 15px;
+  }
+}
