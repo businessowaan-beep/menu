@@ -10,7 +10,6 @@ export async function POST(req:NextRequest){
   if(!b.customerName||!b.customerPhone||!Array.isArray(b.items)||!b.items.length)return NextResponse.json({error:"يرجى إدخال الاسم والهاتف واختيار صنف واحد على الأقل."},{status:400});
   const requested=b.items.filter((x:any)=>ObjectId.isValid(x.productId)&&Number.isInteger(Number(x.quantity))&&Number(x.quantity)>0&&Number(x.quantity)<=50);
   if(!requested.length||requested.length!==b.items.length)return NextResponse.json({error:"تفاصيل الأصناف غير صالحة."},{status:400});
-  const db=await getDb();
   const ids=requested.map((x:any)=>new ObjectId(x.productId));
   const products=await db.collection("products").find({_id:{$in:ids},active:{$ne:false}}).toArray();
   if(products.length!==ids.length)return NextResponse.json({error:"بعض الأصناف لم تعد متاحة. حدّث القائمة وحاول مجدداً."},{status:409});
