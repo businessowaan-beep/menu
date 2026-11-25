@@ -1,0 +1,3 @@
+import{NextRequest,NextResponse}from"next/server";import{COOKIE,makeToken}from"@/lib/auth";export const runtime="nodejs";
+export async function POST(req:NextRequest){const b=await req.json();if(!process.env.ADMIN_PASSWORD||!process.env.SESSION_SECRET)return NextResponse.json({error:"إعدادات الإدارة غير مكتملة على الخادم."},{status:503});if(typeof b.password!=="string"||b.password!==process.env.ADMIN_PASSWORD)return NextResponse.json({error:"كلمة المرور غير صحيحة."},{status:401});const r=NextResponse.json({ok:true});r.cookies.set(COOKIE,makeToken(),{httpOnly:true,secure:process.env.NODE_ENV==="production",sameSite:"strict",path:"/",maxAge:604800});return r}
+export async function DELETE(){const r=NextResponse.json({ok:true});r.cookies.delete(COOKIE);return r}
