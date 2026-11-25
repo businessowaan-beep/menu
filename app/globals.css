@@ -384,3 +384,39 @@ html,body{max-width:100%;overflow-x:hidden}
  .menu-footer .menu-social-icons a,.menu-footer .menu-social-icons a.social-link{height:52px;min-height:52px;border-radius:10px}
  .menu-footer .menu-social-icons a svg{width:18px;height:18px;flex-basis:18px}
 }
+
+
+/* Expand the entire social card across the mobile footer, not just its inner icons. */
+@media (max-width: 760px) {
+  .menu-footer-copy {
+    grid-column: 1 / -1 !important;
+    display: block;
+    width: 100% !important;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .menu-footer .menu-social {
+    display: block;
+    width: 100% !important;
+    min-width: 0;
+    max-width: 100%;
+    margin: 14px 0 0;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+  .menu-footer .menu-social-icons {
+    width: 100%;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 9px;
+  }
+  .menu-footer .menu-social-icons a,
+  .menu-footer .menu-social-icons a.social-link {
+    min-height: 64px;
+    height: 64px;
+  }
+}
+@media (max-width: 380px) {
+  .menu-footer .menu-social { padding: 13px; }
+  .menu-footer .menu-social-icons { gap: 6px; }
+}
