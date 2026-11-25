@@ -14,7 +14,7 @@ export async function GET(_req:Request,{params}:{params:Promise<{id:string}>}){
     const match=source.match(/^data:(image\/(?:png|jpeg|webp));base64,([A-Za-z0-9+/=]+)$/);
     if(!match)return new NextResponse(null,{status:404});
     const bytes=Buffer.from(match[2],"base64");
-    return new NextResponse(new Uint8Array(bytes),{headers:{"Content-Type":match[1],"Content-Length":String(bytes.length),"Cache-Control":"public, max-age=300, s-maxage=1800, stale-while-revalidate=86400","X-Content-Type-Options":"nosniff"}});
+    return new NextResponse(new Uint8Array(bytes),{headers:{"Content-Type":match[1],"Content-Length":String(bytes.length),"Cache-Control":"no-store, max-age=0, must-revalidate","X-Content-Type-Options":"nosniff"}});
   }catch{
     return new NextResponse(null,{status:404});
   }
