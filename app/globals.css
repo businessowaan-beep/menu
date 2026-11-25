@@ -149,3 +149,16 @@ html,body{max-width:100%;overflow-x:hidden}
 .report-actions{display:flex;gap:9px;margin:12px 0 16px}
 @media(max-width:700px){.category-create{align-items:stretch;flex-direction:column}.category-create .primary{width:100%}.admin-category-row{flex-wrap:wrap}.admin-category-row>div{flex:1 1 100%}.report-filters{grid-template-columns:1fr 1fr}.report-filters .primary{grid-column:1/-1}.report-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.report-summary>div{padding:12px}.report-summary b{font-size:15px}.image-adjust-panel label{grid-template-columns:1fr;gap:5px}.report-actions{flex-wrap:wrap}.report-actions button{flex:1}}
 @media print{body{background:#fff!important}.admin-topbar,.admin-nav,.report-filters,.report-actions,.admin-dashboard-page>footer{display:none!important}.admin-dashboard-page{padding:0!important;background:#fff!important}.admin-shell{width:100%!important}.admin-dashboard-page .card{border:0!important;box-shadow:none!important}.admin-table-wrap{overflow:visible!important}.admin-table{min-width:0!important;font-size:9px!important}.admin-table th,.admin-table td{padding:7px!important}}
+
+.admin-mobile-dock{display:none}
+.admin-banner-preview{margin:10px 0 18px;border:1px solid #eee4d2;border-radius:14px;overflow:hidden;background:#f7f3ea}
+.admin-banner-preview img{display:block;width:100%;max-height:190px;object-fit:cover}
+@media(max-width:700px){
+ .admin-dashboard-page{padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+ .admin-nav{display:none}
+ .admin-mobile-dock{position:fixed;z-index:30;display:flex;align-items:stretch;gap:3px;left:50%;transform:translateX(-50%);bottom:max(8px,env(safe-area-inset-bottom));width:calc(100% - 14px);max-width:560px;overflow-x:auto;scrollbar-width:none;padding:7px 6px;background:rgba(24,22,17,.97);border:1px solid #574829;border-radius:17px;box-shadow:0 12px 35px #0003;backdrop-filter:blur(16px)}
+ .admin-mobile-dock::-webkit-scrollbar{display:none}
+ .admin-mobile-dock button{flex:1 0 58px;min-width:58px;min-height:54px;border:0;border-radius:11px;background:transparent;color:#c9c0ae;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:8px;font-weight:700;white-space:nowrap}
+ .admin-mobile-dock button.active{background:#e7bd60;color:#201a0d}
+ .admin-mobile-dock button span{line-height:1.2}
+}
