@@ -14,7 +14,7 @@ export default async function Page(){
       db.collection("settings").findOne({_id:"restaurant" as any}),
       db.collection("categories").find({active:{$ne:false}}).sort({sortOrder:1,name:1}).toArray()
     ]);
-    const rows=products.map(p=>({_id:String(p._id),name:String(p.name||""),description:String(p.description||""),price:Number(p.price||0),category:String(p.category||"عام"),imageUrl:String(p.imageUrl||""),imagePosition:String(p.imagePosition||"50% 50%"),imageFit:String(p.imageFit||"cover")}));
+    const rows=products.map(p=>({_id:String(p._id),name:String(p.name||""),description:String(p.description||""),price:Number(p.price||0),category:String(p.category||"عام"),imageUrl:String(p.imageUrl||"").startsWith("data:")?"/api/product-image/"+String(p._id):String(p.imageUrl||""),imagePosition:String(p.imagePosition||"50% 50%"),imageFit:String(p.imageFit||"cover")}));
     const categoryNames=categories.length?categories.map(c=>String(c.name)):Array.from(new Set(rows.map(p=>p.category)));
     const socialLinks={...defaultSocialLinks,...(settings?.socialLinks||{})};
     return <MenuClient initialData={{products:rows,categories:categoryNames,whatsappPhone:settings?.whatsappPhone||process.env.WHATSAPP_PHONE||"962781776889",contactPhone:settings?.contactPhone||"0781475902",bannerUrl:settings?.bannerUrl||defaultBanner,restaurantName:settings?.restaurantName||"رويال",socialLinks,socialMessage:settings?.socialMessage||"تابعونا على صفحاتنا لتصلكم أخبار وعروض رويال"}}/>;
