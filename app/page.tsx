@@ -48,6 +48,71 @@ export default function SuperAdminPage(){
    {tab==="activity"&&<section style={{background:"#fff",border:"1px solid #e6ebf2",borderRadius:17,padding:20}}><h2 style={{fontSize:18,marginTop:0}}>سجل نشاط المنصة</h2>{activity.map((a,i)=><div key={a._id||i} style={{display:"flex",gap:12,padding:"13px 0",borderBottom:"1px solid #eef1f5"}}><div style={{width:34,height:34,borderRadius:10,background:"#f5ead9",display:"grid",placeItems:"center",color:"#9a6b2d"}}><Activity size={16}/></div><div><b style={{fontSize:13}}>{a.storeName||a.slug||"المنصة"}</b><div style={{fontSize:12,color:"#77859a",marginTop:4}}>{a.type==="subscription_renewed"?"تجديد اشتراك":a.type==="store_created"?"إنشاء متجر":"تعديل بيانات المتجر"}</div><small style={{color:"#9aa5b5"}}>{a.createdAt?new Date(a.createdAt).toLocaleString("ar-JO"):""}</small></div></div>)}{!activity.length&&<p style={{color:"#8290a3"}}>لا يوجد نشاط مسجل حالياً.</p>}</section>}
    {tab==="settings"&&<section style={{background:"#fff",border:"1px solid #e6ebf2",borderRadius:17,padding:22,maxWidth:850}}><h2 style={{fontSize:18,marginTop:0}}>الإعدادات العامة للمنصة</h2><p style={{fontSize:13,color:"#8290a3",lineHeight:1.7}}>هذه الإعدادات تخص منصة MenuStore نفسها، ولا تغيّر بيانات المتاجر الفردية.</p><div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:16,marginTop:20}}><label><span style={label}>اسم المنصة</span><input style={field} value={settings.platformName||""} onChange={e=>SS({...settings,platformName:e.target.value})}/></label><label><span style={label}>بريد الدعم</span><input style={field} value={settings.supportEmail||""} onChange={e=>SS({...settings,supportEmail:e.target.value})}/></label><label><span style={label}>هاتف الدعم</span><input style={field} value={settings.supportPhone||""} onChange={e=>SS({...settings,supportPhone:e.target.value})}/></label><label><span style={label}>مدة الاشتراك الافتراضية (شهر)</span><input style={field} type="number" min="1" max="60" value={settings.defaultSubscriptionMonths||1} onChange={e=>SS({...settings,defaultSubscriptionMonths:Number(e.target.value)})}/></label></div><label style={{display:"flex",alignItems:"center",gap:10,marginTop:22,fontSize:13,fontWeight:700}}><input type="checkbox" checked={!!settings.maintenanceMode} onChange={e=>SS({...settings,maintenanceMode:e.target.checked})}/> وضع الصيانة للمنصة (إعداد محفوظ، لم يتم ربطه بحجب المتاجر بعد)</label><button onClick={saveSettings} disabled={busy} style={{marginTop:22,padding:"12px 20px",border:0,borderRadius:11,background:"#172b49",color:"#fff",fontWeight:800,cursor:"pointer"}}>حفظ إعدادات المنصة</button></section>}
   </section>
-  <style jsx global>{`@media(max-width:760px){.superadmin-shell{display:flex!important;flex-direction:column!important;min-height:100dvh}.superadmin-sidebar{position:sticky!important;top:0!important;z-index:30;width:100%!important;min-height:0!important;height:auto!important;padding:12px!important;box-sizing:border-box;align-self:stretch!important}.superadmin-sidebar>div:first-child{padding:2px 4px 10px!important}.superadmin-sidebar>div:nth-child(2){display:none!important}.superadmin-sidebar nav{display:flex!important;gap:6px!important;overflow-x:auto;overflow-y:hidden;padding:8px 0 2px;scrollbar-width:thin}.superadmin-sidebar nav button{flex:0 0 auto;white-space:nowrap;padding:10px 12px!important;font-size:12px}.superadmin-sidebar>div:nth-last-of-type(1){display:none!important}.superadmin-sidebar>button{position:absolute;left:12px;top:12px;margin:0!important;padding:9px!important;font-size:0}.superadmin-sidebar>button svg{margin:0}.superadmin-content{width:100%;box-sizing:border-box;padding:18px 12px 32px!important}.superadmin-content header{align-items:flex-start!important;margin-bottom:18px!important}.superadmin-content header h1{font-size:22px!important}.superadmin-content section{max-width:100%!important;box-sizing:border-box}.superadmin-content input,.superadmin-content select,.superadmin-content textarea{max-width:100%;min-width:0}.superadmin-login{grid-template-columns:1fr!important;min-height:100dvh!important}.superadmin-login>section:first-child{display:none!important}.superadmin-login>section:last-child{min-height:100dvh;box-sizing:border-box;padding:18px!important}.superadmin-login>section:last-child>div{max-width:440px;width:100%;box-sizing:border-box}.superadmin-content [style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr)!important}.superadmin-content [style*="minmax(260px"]{grid-template-columns:minmax(0,1fr)!important}}@media(min-width:761px) and (max-width:1020px){.superadmin-sidebar{width:210px!important}.superadmin-content{padding:22px 18px 40px!important}}`}</style>
+  <style jsx global>{`
+/* Super admin responsive layout */
+.superadmin-shell{min-width:0}
+.superadmin-sidebar{box-sizing:border-box}
+.superadmin-content{min-width:0;overflow-x:hidden}
+.superadmin-content *{box-sizing:border-box}
+.superadmin-content button,.superadmin-sidebar button{touch-action:manipulation}
+.superadmin-content input,.superadmin-content select,.superadmin-content textarea{min-width:0;max-width:100%}
+.superadmin-content article{min-width:0}
+.superadmin-content a{display:inline-flex;align-items:center;justify-content:center}
+@media(max-width:760px){
+ .superadmin-shell{display:flex!important;flex-direction:column!important;min-height:100dvh}
+ .superadmin-sidebar{position:sticky!important;top:0!important;z-index:40;width:100%!important;min-height:0!important;height:auto!important;max-height:none!important;padding:10px 12px 8px!important;align-self:stretch!important;box-shadow:0 5px 18px #0b172a20}
+ .superadmin-sidebar>div:first-child{padding:1px 3px 9px!important;min-height:42px}
+ .superadmin-sidebar>div:first-child>div:first-child{width:34px!important;height:34px!important;border-radius:10px!important}
+ .superadmin-sidebar>div:nth-child(2){display:none!important}
+ .superadmin-sidebar nav{display:flex!important;gap:7px!important;overflow-x:auto!important;overflow-y:hidden!important;padding:8px 1px 3px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+ .superadmin-sidebar nav::-webkit-scrollbar{display:none}
+ .superadmin-sidebar nav button{flex:0 0 auto!important;white-space:nowrap!important;min-height:40px;padding:9px 12px!important;font-size:12px!important;border-radius:10px!important}
+ .superadmin-sidebar nav button svg{width:16px;height:16px;flex-shrink:0}
+ .superadmin-sidebar nav button span{display:none!important}
+ .superadmin-sidebar>div:nth-last-of-type(1){display:none!important}
+ .superadmin-sidebar>button{position:absolute!important;left:12px!important;top:10px!important;margin:0!important;width:36px;height:36px;justify-content:center;padding:8px!important;font-size:0!important;border:1px solid #35435a!important;border-radius:10px!important}
+ .superadmin-sidebar>button svg{width:17px;height:17px}
+ .superadmin-content{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;padding:16px 12px 30px!important}
+ .superadmin-content header{align-items:flex-start!important;gap:10px!important;margin-bottom:17px!important}
+ .superadmin-content header>div:first-child{min-width:0;flex:1}
+ .superadmin-content header h1{font-size:21px!important;line-height:1.35}
+ .superadmin-content header>div:last-child{gap:6px!important;flex-wrap:wrap;justify-content:flex-end}
+ .superadmin-content header>div:last-child>span{display:none!important}
+ .superadmin-content header button{min-width:40px;min-height:40px}
+ .superadmin-content section{max-width:100%!important;min-width:0!important;padding:15px!important}
+ .superadmin-content [style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr)!important}
+ .superadmin-content>div[style*="grid-template-columns"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .superadmin-content article{display:grid!important;grid-template-columns:44px minmax(0,1fr)!important;gap:10px!important;padding:13px!important}
+ .superadmin-content article>div:first-child{width:42px!important;height:42px!important;grid-row:1 / span 2}
+ .superadmin-content article>div:nth-child(2){min-width:0!important;overflow-wrap:anywhere}
+ .superadmin-content article>div:nth-child(3),.superadmin-content article>div:nth-child(4){grid-column:2;min-width:0!important;display:flex;align-items:center;justify-content:space-between;gap:8px}
+ .superadmin-content article>div:last-child{grid-column:1 / -1;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
+ .superadmin-content article>div:last-child button,.superadmin-content article>div:last-child a{min-height:40px;padding:9px!important;text-align:center;justify-content:center}
+ .superadmin-content section>div[style*="display: flex"]{min-width:0}
+ .superadmin-content input,.superadmin-content select{font-size:16px!important;min-height:44px}
+ .superadmin-content button{min-height:40px}
+ .superadmin-content label{min-width:0}
+ .superadmin-content h2{font-size:17px!important;line-height:1.4}
+ .superadmin-content h3{font-size:14px!important}
+ .superadmin-content .superadmin-editor-actions{display:grid;grid-template-columns:1fr}
+ .superadmin-login{grid-template-columns:minmax(0,1fr)!important;min-height:100dvh!important}
+ .superadmin-login>section:first-child{display:none!important}
+ .superadmin-login>section:last-child{min-height:100dvh;box-sizing:border-box;padding:18px!important}
+ .superadmin-login>section:last-child>div{max-width:440px;width:100%;box-sizing:border-box}
+}
+@media(max-width:380px){
+ .superadmin-content{padding-left:9px!important;padding-right:9px!important}
+ .superadmin-content>div[style*="grid-template-columns"]{gap:8px!important}
+ .superadmin-content>div[style*="grid-template-columns"]>div{padding:12px!important}
+ .superadmin-content>div[style*="grid-template-columns"]>div>div:last-child{font-size:25px!important}
+ .superadmin-sidebar nav button{padding:8px 10px!important;font-size:11px!important}
+ .superadmin-content article>div:last-child{grid-template-columns:1fr!important}
+}
+@media(min-width:761px) and (max-width:1020px){
+ .superadmin-sidebar{width:210px!important;padding:20px 12px!important}
+ .superadmin-content{padding:22px 18px 40px!important}
+ .superadmin-content>div[style*="grid-template-columns"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+`}</style>
  </main>;
 }
