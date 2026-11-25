@@ -4,8 +4,8 @@ import { Search,Plus,Minus,ShoppingBag,Phone,Clock,Utensils,ChevronLeft,X,CheckC
 type Product={_id:string;name:string;description?:string;price:number;category:string;imageUrl?:string};
 type CartItem={product:Product;qty:number};
 export default function Home(){
- const [products,setProducts]=useState<Product[]>([]),[cats,setCats]=useState(["الكل"]),[cat,setCat]=useState("الكل"),[search,setSearch]=useState(""),[cart,setCart]=useState<CartItem[]>([]),[cartOpen,setCartOpen]=useState(false),[name,setName]=useState(""),[phone,setPhone]=useState(""),[notes,setNotes]=useState(""),[message,setMessage]=useState(""),[busy,setBusy]=useState(false),[contact,setContact]=useState("0781776889"),[orderNo,setOrderNo]=useState("");
- useEffect(()=>{fetch("/api/menu").then(r=>r.json()).then(d=>{setProducts(d.products||[]);setCats(["الكل",...(d.categories||[])]);setContact(d.contactPhone||"0781776889")}).catch(()=>{})},[]);
+ const [products,setProducts]=useState<Product[]>([]),[cats,setCats]=useState(["الكل"]),[cat,setCat]=useState("الكل"),[search,setSearch]=useState(""),[cart,setCart]=useState<CartItem[]>([]),[cartOpen,setCartOpen]=useState(false),[name,setName]=useState(""),[phone,setPhone]=useState(""),[notes,setNotes]=useState(""),[message,setMessage]=useState(""),[busy,setBusy]=useState(false),[contact,setContact]=useState("0781475902"),[orderNo,setOrderNo]=useState("");
+ useEffect(()=>{fetch("/api/menu").then(r=>r.json()).then(d=>{setProducts(d.products||[]);setCats(["الكل",...(d.categories||[])]);setContact(d.contactPhone||"0781475902")}).catch(()=>{})},[]);
  const visible=useMemo(()=>products.filter(p=>(cat==="الكل"||p.category===cat)&&p.name.toLowerCase().includes(search.toLowerCase())),[products,cat,search]);
  const total=cart.reduce((s,x)=>s+x.qty*x.product.price,0),count=cart.reduce((s,x)=>s+x.qty,0);
  function add(p:Product){setCart(a=>{const f=a.find(x=>x.product._id===p._id);return f?a.map(x=>x.product._id===p._id?{...x,qty:x.qty+1}:x):[...a,{product:p,qty:1}]})}
