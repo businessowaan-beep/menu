@@ -6,7 +6,9 @@ export async function getDb(){
  const client=await global._royalMongoPromise;const db=client.db(process.env.MONGODB_DB||"royal_menu");
  if(!global._royalIndexesPromise)global._royalIndexesPromise=Promise.all([
   db.collection("products").createIndex({active:1,sortOrder:1,createdAt:-1}),
-  db.collection("orders").createIndex({createdAt:-1}),\n  db.collection("orders").createIndex({orderNumber:1},{unique:true}),\n  db.collection("orders").createIndex({requestId:1},{unique:true,sparse:true}),
+  db.collection("orders").createIndex({createdAt:-1}),
+  db.collection("orders").createIndex({orderNumber:1},{unique:true}),
+  db.collection("orders").createIndex({requestId:1},{unique:true,sparse:true}),
   db.collection("categories").createIndex({active:1,sortOrder:1,name:1})
  ]).then(()=>undefined);
  await global._royalIndexesPromise;return db;
