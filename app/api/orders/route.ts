@@ -1,8 +1,9 @@
 import{NextRequest,NextResponse}from"next/server";import{ObjectId}from"mongodb";import{getDb}from"@/lib/db";export const runtime="nodejs";
 export async function POST(req:NextRequest){
+ let requestId="";
  try{
   const b=await req.json();
-  const requestId=typeof b.requestId==="string"?b.requestId.slice(0,80):"";
+  requestId=typeof b.requestId==="string"?b.requestId.slice(0,80):"";
   if(!requestId)return NextResponse.json({error:"معرّف الطلب غير صالح."},{status:400});
   const db=await getDb();
   const previous=await db.collection("orders").findOne({requestId});
@@ -20,5 +21,5 @@ export async function POST(req:NextRequest){
   const orderNumber="R-"+new Date().toISOString().slice(0,10).replaceAll("-","")+"-"+String(seq).padStart(4,"0");
   await db.collection("orders").insertOne({requestId,orderNumber,customerName:String(b.customerName).trim().slice(0,100),customerPhone:String(b.customerPhone).trim().slice(0,30),notes:String(b.notes||"").slice(0,1000),items,total,status:"new",createdAt:new Date()});
   return NextResponse.json({ok:true,orderNumber,total,items});
- }catch(error){if((error as any)?.code===11000){const b=await req.clone().json().catch(()=>({}));const previous=typeof b.requestId==="string"?await (await getDb()).collection("orders").findOne({requestId:b.requestId}):null;if(previous)return NextResponse.json({ok:true,orderNumber:previous.orderNumber,total:previous.total,items:previous.items,replayed:true})}return NextResponse.json({error:"تعذر تسجيل الطلب. يرجى المحاولة لاحقاً."},{status:500})}
+ }catch(error){if((error as any)?.code===11000&&requestId){const previous=await (await getDb()).collection("orders").findOne({requestId});if(previous)return NextResponse.json({ok:true,orderNumber:previous.orderNumber,total:previous.total,items:previous.items,replayed:true})}return NextResponse.json({error:"تعذر تسجيل الطلب. يرجى المحاولة لاحقاً."},{status:500})}
 }
