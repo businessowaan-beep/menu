@@ -8,6 +8,8 @@ const defaultBanner="https://res.cloudinary.com/dyhbzxjvi/image/upload/v17956185
 const defaultSocialLinks={facebook:"https://web.facebook.com/RoyalMansaf.Jo",instagram:"",youtube:"",tiktok:"",snapchat:""};
 
 export default async function Page(){
+  const platform=await getPlatformSettings();
+  if(platform?.maintenanceMode)return <main dir="rtl" style={{minHeight:"100vh",display:"grid",placeItems:"center",padding:24,background:"#f7f5f0",fontFamily:"Arial,sans-serif",textAlign:"center"}}><section style={{maxWidth:520,background:"#fff",padding:32,borderRadius:20,boxShadow:"0 12px 40px #0000000d"}}><h1 style={{fontSize:26,marginBottom:12}}>المتجر تحت الصيانة</h1><p style={{color:"#64748b",lineHeight:1.9}}>{platform.maintenanceMessage||"نعمل على تحسين الخدمة. يرجى المحاولة مرة أخرى لاحقاً."}</p></section></main>;
   try{
     const db=await getDb();
     const [products,settings,categories]=await Promise.all([
