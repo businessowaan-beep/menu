@@ -114,6 +114,50 @@ export default function SuperAdminPage(){
  .superadmin-content{padding:22px 18px 40px!important}
  .superadmin-content>div[style*="grid-template-columns"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
-`}</style>
+
+/* MenuStore Super Admin — fresh green / soft yellow identity */
+.superadmin-shell{background:#eff8f0!important;color:#173b2a!important}
+.superadmin-sidebar{background:#124b32!important;color:#f5fff7!important}
+.superadmin-sidebar>div:first-child{border-bottom-color:#2b6849!important}
+.superadmin-sidebar>div:first-child>div:first-child{background:#f4d35e!important;color:#17452f!important}
+.superadmin-sidebar>div:nth-child(2){color:#a8cbb4!important}
+.superadmin-sidebar nav button{transition:background .18s ease,color .18s ease,transform .18s ease}
+.superadmin-sidebar nav button[style*="#263c5a"]{background:#267448!important;color:#fff!important;box-shadow:inset -3px 0 #f4d35e}
+.superadmin-sidebar nav button[style*="transparent"]{color:#d1e5d6!important}
+.superadmin-sidebar nav button:hover{background:#1d6240!important;color:#fff!important}
+.superadmin-sidebar nav button span{background:#f4d35e!important}
+.superadmin-sidebar>div[style*="#1a2a42"]{background:#1b603d!important;color:#d4e8d9!important}
+.superadmin-sidebar>button{border-color:#4b8060!important;color:#f1f8f2!important}
+.superadmin-sidebar>button:hover{background:#1b603d!important}
+.superadmin-content header>div:first-child>div:first-child{color:#a27b16!important}
+.superadmin-content header>div:first-child h1{color:#17452f!important}
+.superadmin-content header>div:first-child>div:last-child{color:#64806d!important}
+.superadmin-content header button{border-color:#d5e8d8!important;color:#286342!important}
+.superadmin-content header button:hover{background:#f1f8e8!important}
+.superadmin-content section{border-color:#dcecdf!important}
+.superadmin-content button[style*="#172b49"]{background:#17623d!important;color:#fff!important;box-shadow:0 5px 14px #17623d20}
+.superadmin-content button[style*="#172b49"]:hover{background:#104d30!important}
+.superadmin-content button[style*="#d6a65e"]{background:#f4d35e!important;color:#24452f!important}
+.superadmin-content button[style*="#d6a65e"]:hover{background:#eac342!important}
+.superadmin-content button[style*="#edf2f8"]{background:#eaf5ec!important;color:#24613e!important}
+.superadmin-content button[style*="#eaf5ee"]{background:#e8f5e9!important;color:#1d7042!important}
+.superadmin-content a{border-color:#d8e9da!important;color:#286342!important}
+.superadmin-content article,.superadmin-content section[style*="background: rgb(255, 255, 255)"]{border-color:#dcecdf!important}
+.superadmin-content input:focus,.superadmin-content select:focus{border-color:#78ad83!important;box-shadow:0 0 0 3px #dff0e2!important}
+.superadmin-login{background:#103d2b!important}
+.superadmin-login>section:first-child{background:radial-gradient(circle at 20% 20%,#397c50 0,#1b5b3a 43%,#103d2b 82%)!important}
+.superadmin-login>section:first-child span{background:#f4d35e!important;color:#17452f!important}
+.superadmin-login>section:first-child span:last-child,.superadmin-login>section:first-child>div>div:nth-child(2)>div:first-child{color:#f4d35e!important}
+.superadmin-login>section:last-child{background:#eff8f0!important}
+.superadmin-login>section:last-child>div{border:1px solid #dcecdf!important;box-shadow:0 25px 80px #124b3218!important}
+.superadmin-login>section:last-child>div>div:first-child{background:#fff5c9!important;color:#8a6a0a!important}
+.superadmin-login>section:last-child button[style*="#172b49"]{background:#17623d!important;color:#fff!important}
+.superadmin-login>section:last-child button[style*="#172b49"]:hover{background:#104d30!important}
+.superadmin-login input:focus{border-color:#78ad83!important;box-shadow:0 0 0 3px #dff0e2!important}
+@media(max-width:760px){
+ .superadmin-sidebar{background:#124b32!important}
+ .superadmin-sidebar nav button[style*="#263c5a"]{background:#267448!important}
+}
+\n`}</style>
  </main>;
 }
