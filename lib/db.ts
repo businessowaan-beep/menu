@@ -1,23 +1,21 @@
-import { MongoClient } from "mongodb";
+import {MongoClient} from "mongodb";
 declare global {
-  var _royalMongoPromise: Promise<MongoClient> | undefined;
-  var _royalIndexesPromise: Promise<void> | undefined;
+ var _royalMongoPromise:Promise<MongoClient>|undefined;
+ var _royalIndexesPromise:Promise<void>|undefined;
 }
-export async function getDb() {
-  const uri = process.env.MONGODB_URI;
-  if (!uri) throw new Error("MONGODB_URI is not configured");
-  if (!global._royalMongoPromise) global._royalMongoPromise = new MongoClient(uri, { retryWrites: true, writeConcern: { w: "majority", j: true } }).connect();
-  const client = await global._royalMongoPromise;
-  const db = client.db(process.env.MONGODB_DB || "royal_menu");
-  if (!global._royalIndexesPromise) global._royalIndexesPromise = Promise.all([
-    db.collection("products").createIndex({ tenantId: 1, active: 1, sortOrder: 1, createdAt: -1 }),
-    db.collection("orders").createIndex({ tenantId: 1, createdAt: -1 }),
-    db.collection("orders").createIndex({ orderNumber: 1 }, { unique: true }),
-    db.collection("orders").createIndex({ requestId: 1 }, { unique: true, sparse: true }),
-    db.collection("categories").createIndex({ tenantId: 1, active: 1, sortOrder: 1, name: 1 }),
-    db.collection("settings").createIndex({ tenantId: 1 }, { unique: true, sparse: true }),
-    db.collection("counters").createIndex({ tenantId: 1 })
-  ]).then(() => undefined);
-  await global._royalIndexesPromise;
-  return db;
+export async function getDb(){
+ const uri=process.env.MONGODB_URI;
+ if(!uri)throw new Error("MONGODB_URI is not configured");
+ if(!global._royalMongoPromise)global._royalMongoPromise=new MongoClient(uri,{retryWrites:true,writeConcern:{w:"majority",j:true}}).connect();
+ const client=await global._royalMongoPromise;
+ const db=client.db(process.env.MONGODB_DB||"royal_menu");
+ if(!global._royalIndexesPromise)global._royalIndexesPromise=Promise.all([
+  db.collection("products").createIndex({tenantId:1,active:1,sortOrder:1,createdAt:-1}),
+  db.collection("orders").createIndex({tenantId:1,createdAt:-1}),
+  db.collection("orders").createIndex({orderNumber:1},{unique:true}),
+  db.collection("orders").createIndex({requestId:1},{unique:true,sparse:true}),
+  db.collection("categories").createIndex({tenantId:1,active:1,sortOrder:1,name:1})
+ ]).then(()=>undefined);
+ await global._royalIndexesPromise;
+ return db;
 }
