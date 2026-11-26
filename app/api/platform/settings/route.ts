@@ -12,7 +12,8 @@ export async function PATCH(req:NextRequest){
    supportPhone:String(b.supportPhone||"").trim().slice(0,40),
    currency:"JOD",
    defaultSubscriptionMonths:Math.min(60,Math.max(1,Number(b.defaultSubscriptionMonths)||1)),
-   maintenanceMode:Boolean(b.maintenanceMode),\n   maintenanceMessage:String(b.maintenanceMessage||"نعمل على تحسين الخدمة. يرجى المحاولة مرة أخرى لاحقاً.").trim().slice(0,240)
+   maintenanceMode:Boolean(b.maintenanceMode),
+   maintenanceMessage:String(b.maintenanceMessage||"نعمل على تحسين الخدمة. يرجى المحاولة مرة أخرى لاحقاً.").trim().slice(0,240)
   };
   const db=await getDb();
   await db.collection("platform_settings").updateOne(({_id:"main"} as any),{$set:{...allowed,updatedAt:new Date().toISOString()},$setOnInsert:{createdAt:new Date().toISOString()}},{upsert:true});
