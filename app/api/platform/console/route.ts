@@ -86,7 +86,9 @@ export async function POST(req: NextRequest) {
         sortOrder: Number(body.sortOrder) || 0,
         updatedAt: now
       };
-      const planFields = { ...plan };\ndelete (planFields as any)._id;\n      await db.collection("platform_plans").updateOne({ _id: id } as any, { $set: planFields, $setOnInsert: { createdAt: now } }, { upsert: true });
+      const planFields = { ...plan };
+delete (planFields as any)._id;
+      await db.collection("platform_plans").updateOne({ _id: id } as any, { $set: planFields, $setOnInsert: { createdAt: now } }, { upsert: true });
       await db.collection("platform_activity").insertOne({ type: "plan_saved", planId: id, storeName: name, createdAt: now });
       return NextResponse.json({ ok: true, plan });
     }
@@ -98,7 +100,8 @@ export async function POST(req: NextRequest) {
       const tenant = await db.collection("tenants").findOne({ _id: slug } as any);
       if (!tenant) return NextResponse.json({ error: "المتجر المحدد غير موجود." }, { status: 404 });
       const record = { slug, domain, status: "pending_dns", sslStatus: "not_configured", updatedAt: now, createdAt: now };
-      const { createdAt, ...domainFields } = record;\n      await db.collection("platform_domains").updateOne({ domain }, { $set: domainFields, $setOnInsert: { createdAt } }, { upsert: true });
+      const { createdAt, ...domainFields } = record;
+      await db.collection("platform_domains").updateOne({ domain }, { $set: domainFields, $setOnInsert: { createdAt } }, { upsert: true });
       await db.collection("platform_activity").insertOne({ type: "custom_domain_added", slug, storeName: tenant.name, details: { domain }, createdAt: now });
       return NextResponse.json({ ok: true, domain: record, note: "تم حفظ الدومين بانتظار إعداد DNS وربطه بمشروع Vercel." });
     }
@@ -122,7 +125,9 @@ export async function POST(req: NextRequest) {
         active: body.active !== false,
         updatedAt: now
       };
-      const themeFields = { ...theme };\ndelete (themeFields as any)._id;\n      await db.collection("platform_themes").updateOne({ _id: id } as any, { $set: themeFields, $setOnInsert: { createdAt: now } }, { upsert: true });
+      const themeFields = { ...theme };
+delete (themeFields as any)._id;
+      await db.collection("platform_themes").updateOne({ _id: id } as any, { $set: themeFields, $setOnInsert: { createdAt: now } }, { upsert: true });
       return NextResponse.json({ ok: true, theme });
     }
 
