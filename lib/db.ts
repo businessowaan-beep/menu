@@ -14,7 +14,7 @@ export async function getDb(){
   db.collection("orders").createIndex({tenantId:1,createdAt:-1}),
   db.collection("orders").createIndex({orderNumber:1},{unique:true}),
   db.collection("orders").createIndex({requestId:1},{unique:true,sparse:true}),
-  db.collection("categories").createIndex({tenantId:1,active:1,sortOrder:1,name:1})
+  db.collection("categories").createIndex({tenantId:1,active:1,sortOrder:1,name:1}),\n  db.collection("tenants").createIndex({adminUsername:1},{unique:true,partialFilterExpression:{adminUsername:{$type:"string"}}})
  ]).then(()=>undefined);
  await global._royalIndexesPromise;
  return db;

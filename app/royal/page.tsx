@@ -1,5 +1,5 @@
 import MenuClient from "../MenuClient";
-import {getDb} from "@/lib/db";
+import {getDb} from "@/lib/db";\nimport {getPlatformSettings} from "@/lib/tenant";
 
 export const dynamic = "force-dynamic";
 
