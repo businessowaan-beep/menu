@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
         sortOrder: Number(body.sortOrder) || 0,
         updatedAt: now
       };
-      const { _id: planId, ...planFields } = plan;\n      await db.collection("platform_plans").updateOne({ _id: id } as any, { $set: planFields, $setOnInsert: { createdAt: now } }, { upsert: true });
+      const planFields = { ...plan };\ndelete (planFields as any)._id;\n      await db.collection("platform_plans").updateOne({ _id: id } as any, { $set: planFields, $setOnInsert: { createdAt: now } }, { upsert: true });
       await db.collection("platform_activity").insertOne({ type: "plan_saved", planId: id, storeName: name, createdAt: now });
       return NextResponse.json({ ok: true, plan });
     }
@@ -122,7 +122,7 @@ export async function POST(req: NextRequest) {
         active: body.active !== false,
         updatedAt: now
       };
-      const { _id: themeId, ...themeFields } = theme;\n      await db.collection("platform_themes").updateOne({ _id: id } as any, { $set: themeFields, $setOnInsert: { createdAt: now } }, { upsert: true });
+      const themeFields = { ...theme };\ndelete (themeFields as any)._id;\n      await db.collection("platform_themes").updateOne({ _id: id } as any, { $set: themeFields, $setOnInsert: { createdAt: now } }, { upsert: true });
       return NextResponse.json({ ok: true, theme });
     }
 
