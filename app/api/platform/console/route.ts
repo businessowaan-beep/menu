@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
       const tenant = await db.collection("tenants").findOne({ _id: slug } as any);
       if (!tenant) return NextResponse.json({ error: "المتجر المحدد غير موجود." }, { status: 404 });
       const record = { slug, domain, status: "pending_dns", sslStatus: "not_configured", updatedAt: now, createdAt: now };
-      await db.collection("platform_domains").updateOne({ domain }, { $set: { ...record, createdAt: undefined }, $setOnInsert: { createdAt: now } }, { upsert: true });
+      const { createdAt, ...domainFields } = record;\n      await db.collection("platform_domains").updateOne({ domain }, { $set: domainFields, $setOnInsert: { createdAt } }, { upsert: true });
       await db.collection("platform_activity").insertOne({ type: "custom_domain_added", slug, storeName: tenant.name, details: { domain }, createdAt: now });
       return NextResponse.json({ ok: true, domain: record, note: "تم حفظ الدومين بانتظار إعداد DNS وربطه بمشروع Vercel." });
     }
