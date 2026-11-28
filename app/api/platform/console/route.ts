@@ -121,14 +121,15 @@ delete (planFields as any)._id;
           domainInfo = await check.json().catch(() => ({}));
           if (!check.ok || domainInfo.projectId !== projectId) return NextResponse.json({ error: "الدومين " + vercelDomain + " مستخدم أو مربوط بمشروع Vercel آخر. لم يتم ربطه بهذا المتجر." }, { status: 409 });
         }
-        results.push({ domain: vercelDomain, verified: domainInfo.verified === true, verification: domainInfo.verification || [] });
+        results.push({ domain: vercelDomain, verified: domainInfo.verified === true, misconfigured: domainInfo.misconfigured === true, verification: domainInfo.verification || [] });
       }
       const primary = results[0];
-      const record = { slug, domain, status: primary.verified ? "active" : "pending_dns", verified: primary.verified, vercelConfigured: true, vercelDomains: results, verification: primary.verification, sslStatus: primary.verified ? "vercel_managed" : "pending", updatedAt: now, createdAt: existing?.createdAt || now };
+      const active = primary.verified && !primary.misconfigured;
+      const record = { slug, domain, status: active ? "active" : "pending_dns", verified: primary.verified, vercelConfigured: true, vercelDomains: results, verification: primary.verification, sslStatus: active ? "vercel_managed" : "pending", updatedAt: now, createdAt: existing?.createdAt || now };
       const { createdAt, ...domainFields } = record;
       await db.collection("platform_domains").updateOne({ domain }, { $set: domainFields, $setOnInsert: { createdAt } }, { upsert: true });
       await db.collection("platform_activity").insertOne({ type: "custom_domain_added", slug, storeName: tenant.name, details: { domain, vercelDomains }, createdAt: now });
-      return NextResponse.json({ ok: true, domain: record, note: primary.verified ? "تم ربط الدومين بمشروع MenuStore والتحقق منه. SSL تتم إدارته تلقائياً من Vercel." : "أُضيف الدومين إلى مشروع MenuStore في Vercel. انسخ سجلات التحقق وDNS أدناه، وبعد إعدادها اضغط فحص الدومين." });
+      return NextResponse.json({ ok: true, domain: record, note: active ? "تم ربط الدومين والتحقق من إعداد DNS في Vercel. SSL تتم إدارته تلقائياً." : "أُضيف الدومين إلى مشروع MenuStore. أكمل سجلات DNS والتحقق ثم أعد الفحص." });
     }
 
     if (body.action === "saveTheme") {
