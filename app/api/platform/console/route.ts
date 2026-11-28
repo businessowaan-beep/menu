@@ -95,15 +95,32 @@ delete (planFields as any)._id;
 
     if (body.action === "saveDomain") {
       const slug = clean(body.slug, 48).toLowerCase();
-      const domain = clean(body.domain, 253).toLowerCase().replace(/^https?:\/\//, "").replace(/\/$/, "");
-      if (!slugPattern.test(slug) || !domainPattern.test(domain)) return NextResponse.json({ error: "أدخل رابطاً مختصراً ودومين صحيحاً بدون https." }, { status: 400 });
+      const domain = clean(body.domain, 253).toLowerCase().replace(/^https?:\\/\\//, "").replace(/\\/$/, "").replace(/^www\\./, "");
+      if (!slugPattern.test(slug) || !domainPattern.test(domain)) return NextResponse.json({ error: "أدخل رابط متجر صحيحاً ودوميناً صحيحاً بدون https أو مسارات." }, { status: 400 });
       const tenant = await db.collection("tenants").findOne({ _id: slug } as any);
       if (!tenant) return NextResponse.json({ error: "المتجر المحدد غير موجود." }, { status: 404 });
-      const record = { slug, domain, status: "pending_dns", sslStatus: "not_configured", updatedAt: now, createdAt: now };
+      const existing = await db.collection("platform_domains").findOne({ domain });
+      if (existing && existing.slug !== slug) return NextResponse.json({ error: "هذا الدومين مربوط مسبقاً بمتجر آخر." }, { status: 409 });
+      const token = process.env.VERCEL_TOKEN;
+      const projectId = process.env.VERCEL_PROJECT_ID || "prj_3GKoNmjRyyZJGn0kce07U7smdWRh";
+      const teamId = process.env.VERCEL_TEAM_ID || "team_4q5GjTDCTgrNb6R3ec37hPEf";
+      if (!token) return NextResponse.json({ error: "أضف VERCEL_TOKEN إلى Environment Variables في مشروع Vercel ثم أعد النشر. لم يتم حفظ الدومين أو ربطه بعد." }, { status: 503 });
+      const vercelDomains = [domain, ...(domain.split(".").length === 2 ? ["www." + domain] : [])];
+      const results: any[] = [];
+      for (const vercelDomain of vercelDomains) {
+        const endpoint = new URL("https://api.vercel.com/v10/projects/" + encodeURIComponent(projectId) + "/domains");
+        endpoint.searchParams.set("teamId", teamId);
+        const vr = await fetch(endpoint, { method: "POST", headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" }, body: JSON.stringify({ name: vercelDomain }), cache: "no-store" });
+        const vd = await vr.json().catch(() => ({}));
+        if (!vr.ok && vr.status !== 409) return NextResponse.json({ error: vd?.error?.message || "تعذر إضافة " + vercelDomain + " إلى مشروع Vercel.", vercel: vd }, { status: vr.status });
+        results.push({ domain: vercelDomain, verified: vd.verified === true, verification: vd.verification || [] });
+      }
+      const primary = results[0];
+      const record = { slug, domain, status: primary.verified ? "active" : "pending_dns", verified: primary.verified, vercelConfigured: true, vercelDomains: results, verification: primary.verification, sslStatus: primary.verified ? "vercel_managed" : "pending", updatedAt: now, createdAt: existing?.createdAt || now };
       const { createdAt, ...domainFields } = record;
       await db.collection("platform_domains").updateOne({ domain }, { $set: domainFields, $setOnInsert: { createdAt } }, { upsert: true });
-      await db.collection("platform_activity").insertOne({ type: "custom_domain_added", slug, storeName: tenant.name, details: { domain }, createdAt: now });
-      return NextResponse.json({ ok: true, domain: record, note: "تم حفظ الدومين بانتظار إعداد DNS وربطه بمشروع Vercel." });
+      await db.collection("platform_activity").insertOne({ type: "custom_domain_added", slug, storeName: tenant.name, details: { domain, vercelDomains }, createdAt: now });
+      return NextResponse.json({ ok: true, domain: record, note: primary.verified ? "تم ربط الدومين بمشروع MenuStore والتحقق منه. SSL تتم إدارته تلقائياً من Vercel." : "أُضيف الدومين إلى مشروع MenuStore في Vercel. انسخ سجلات التحقق وDNS أدناه، وبعد إعدادها اضغط فحص الدومين." });
     }
 
     if (body.action === "saveTheme") {
