@@ -490,3 +490,25 @@ html,body{max-width:100%;overflow-x:hidden}
  .admin-dashboard-page .admin-topbar{position:sticky;top:0;z-index:30;background:#f7f5f0;padding:8px 0}
 }
 
+
+
+/* Final store theme bindings and polished circular social icons */
+.category-chip{background:var(--category-bg,#fff)!important;color:var(--category-text,#716b61)!important;border-color:color-mix(in srgb,var(--category-text,#716b61) 18%,transparent)!important}
+.category-chip.selected{background:var(--category-active-bg,#191814)!important;color:var(--category-active-text,#f2d28b)!important;border-color:var(--category-active-bg,#191814)!important}
+.food-tag{background:var(--category-tag-bg,#171613)!important;color:var(--category-tag-text,#f5d78f)!important}
+.menu-footer .menu-social{width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:0;border:0;background:transparent;box-shadow:none}
+.menu-footer .menu-social-icons{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.menu-footer .menu-social-icons a,.menu-footer .menu-social-icons a.social-link{width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;max-width:48px!important;flex:0 0 48px!important;padding:0!important;margin:0!important;border-radius:50%!important;display:inline-flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;overflow:visible!important;border:1px solid #e5dfd3!important;background:#fff!important;color:#39352e!important;box-shadow:0 3px 12px rgba(25,20,10,.09)!important;transition:transform .18s ease,box-shadow .18s ease,background .18s ease!important}
+.menu-footer .menu-social-icons a:hover{transform:translateY(-3px);box-shadow:0 7px 18px rgba(25,20,10,.15)!important}
+.menu-footer .menu-social-icons a svg{width:21px!important;height:21px!important;flex:0 0 21px!important}
+.menu-footer .menu-social-icons a small{display:none!important}
+.menu-footer .menu-social-icons a.social-facebook{background:#1877f2!important;color:#fff!important;border-color:#1877f2!important}
+.menu-footer .menu-social-icons a.social-instagram{background:linear-gradient(145deg,#833ab4,#e1306c 58%,#f77737)!important;color:#fff!important;border-color:#d94b78!important}
+.menu-footer .menu-social-icons a.social-youtube{background:#ff0033!important;color:#fff!important;border-color:#ff0033!important}
+.menu-footer .menu-social-icons a.social-tiktok{background:#111!important;color:#fff!important;border-color:#111!important}
+.menu-footer .menu-social-icons a.social-snapchat{background:#fffc00!important;color:#171717!important;border-color:#e8df00!important}
+.menu-footer .store-website-link{display:inline-flex;align-items:center;gap:8px;width:max-content;max-width:100%;padding:10px 15px;border:1px solid #e6dfd2;border-radius:999px;background:#fff;color:var(--store-primary,#8a672b)!important;font-size:12px;font-weight:800;text-decoration:none;box-shadow:0 3px 12px rgba(25,20,10,.05)}
+.admin-save-settings{min-width:190px;min-height:48px;touch-action:manipulation;cursor:pointer}
+.admin-save-settings:disabled{opacity:.65;cursor:wait}
+.admin-save-feedback{margin:12px 0 0;padding:11px 13px;border-radius:10px;background:#f3f7f1;color:#315d39;font-size:13px;line-height:1.7}
+@media(max-width:760px){.menu-footer .menu-social-icons{gap:10px}.menu-footer .menu-social-icons a,.menu-footer .menu-social-icons a.social-link{width:46px!important;height:46px!important;min-width:46px!important;min-height:46px!important;max-width:46px!important;flex-basis:46px!important}.menu-footer .store-website-link{font-size:11px}}
