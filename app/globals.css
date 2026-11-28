@@ -471,6 +471,8 @@ html,body{max-width:100%;overflow-x:hidden}
 
 
 /* Store admin bottom navigation and compact drawer */
+.admin-more-trigger{display:none!important}
+.admin-more-backdrop,.admin-more-drawer{display:none}
 @media(max-width:760px){
  .admin-top-actions{display:flex;align-items:center;gap:6px}
  .admin-more-trigger{display:flex!important;align-items:center;justify-content:center;width:42px;height:42px;padding:0!important}
