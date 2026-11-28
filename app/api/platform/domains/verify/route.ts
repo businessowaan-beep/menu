@@ -15,9 +15,10 @@ export async function POST(req:NextRequest){
   const vd=await vr.json().catch(()=>({}));
   if(!vr.ok)return NextResponse.json({error:vd?.error?.message||"تعذر فحص الدومين في Vercel",vercel:vd},{status:vr.status});
   const verified=vd.verified===true;
+  const active=verified&&vd.misconfigured!==true;
   const now=new Date().toISOString();
   const db=await getDb();
-  await db.collection("platform_domains").updateOne({domain},{$set:{verified,status:verified?"active":"pending_dns",sslStatus:verified?"vercel_managed":"pending",vercelConfigured:true,vercelVerification:vd.verification||[],updatedAt:now}});
-  return NextResponse.json({ok:true,domain,verified,status:verified?"active":"pending_dns",verification:vd.verification||[],misconfigured:vd.misconfigured===true,message:verified?"تم التحقق من الدومين. سيعرض منيو المتجر مباشرة بعد تفعيل SSL من Vercel.":"لم يكتمل التحقق بعد. أضف سجلات DNS المعروضة ثم أعد الفحص."});
+  await db.collection("platform_domains").updateOne({domain},{$set:{verified,status:active?"active":"pending_dns",sslStatus:active?"vercel_managed":"pending",vercelConfigured:true,vercelVerification:vd.verification||[],updatedAt:now}});
+  return NextResponse.json({ok:true,domain,verified,status:active?"active":"pending_dns",verification:vd.verification||[],misconfigured:vd.misconfigured===true,message:active?"تم التحقق من الدومين وإعداد DNS. SSL تتم إدارته تلقائياً من Vercel.":"لم يكتمل إعداد الدومين بعد. أكمل سجلات DNS المعروضة ثم أعد الفحص."});
  }catch{return NextResponse.json({error:"تعذر الاتصال بخدمة Vercel"},{status:502})}
 }
