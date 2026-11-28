@@ -516,3 +516,18 @@ html,body{max-width:100%;overflow-x:hidden}
 /* Final responsive banner crop: saved desktop/mobile positions must win over legacy rules */
 .cover .cover-image{object-position:var(--banner-desktop-position,50% 45%)!important}
 @media(max-width:760px){.cover .cover-image{object-position:var(--banner-mobile-position,62% 50%)!important}}
+
+
+/* Clear category browser: no categories disappear off-screen */
+.category-browser{margin:0 0 18px;padding:0 30px}
+.category-browser-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px;color:var(--store-text,#29251d)}
+.category-browser-heading strong{font-size:13px;font-weight:800}
+.category-browser-heading span{font-size:10px;color:#938a7c}
+.category-browser .category-rail{position:static;display:flex;flex-wrap:wrap;gap:9px;overflow:visible;padding:0;background:transparent;backdrop-filter:none}
+.category-browser .category-chip{min-height:42px;padding:10px 18px;white-space:normal}
+@media(max-width:760px){
+ .category-browser{margin:0 0 16px;padding:0 15px}
+ .category-browser-heading{margin-bottom:9px}
+ .category-browser .category-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .category-browser .category-chip{width:100%;min-width:0;min-height:48px;padding:10px 8px;border-radius:13px;font-size:12px;line-height:1.45;text-align:center;overflow-wrap:anywhere}
+}
