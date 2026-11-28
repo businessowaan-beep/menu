@@ -7,8 +7,8 @@ export async function POST(req:NextRequest){
  const body=await req.json().catch(()=>({}));
  const domain=String(body.domain||"").trim().toLowerCase().replace(/^www\\./,"");
  if(!/^(?=.{4,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,}$/.test(domain))return NextResponse.json({error:"الدومين غير صحيح"},{status:400});
- const token=process.env.VERCEL_TOKEN,projectId=process.env.VERCEL_PROJECT_ID,teamId=process.env.VERCEL_TEAM_ID;
- if(!token||!projectId||!teamId)return NextResponse.json({error:"أكمل متغيرات VERCEL_TOKEN وVERCEL_PROJECT_ID وVERCEL_TEAM_ID في إعدادات Vercel أولاً."},{status:503});
+ const token=process.env.VERCEL_TOKEN,projectId=process.env.VERCEL_PROJECT_ID||"prj_3GKoNmjRyyZJGn0kce07U7smdWRh",teamId=process.env.VERCEL_TEAM_ID||"team_4q5GjTDCTgrNb6R3ec37hPEf";
+ if(!token)return NextResponse.json({error:"أضف VERCEL_TOKEN إلى إعدادات Vercel أولاً."},{status:503});
  try{
   const url=new URL("https://api.vercel.com/v9/projects/"+encodeURIComponent(projectId)+"/domains/"+encodeURIComponent(domain));url.searchParams.set("teamId",teamId);
   const vr=await fetch(url,{headers:{Authorization:"Bearer "+token},cache:"no-store"});
