@@ -1,0 +1,2 @@
+export const dynamic="force-dynamic";
+export default function DomainUnavailable(){return <main dir="rtl" style={{minHeight:"100vh",display:"grid",placeItems:"center",padding:24,background:"#f5f7f6",fontFamily:"Arial,sans-serif",textAlign:"center"}}><section style={{maxWidth:480,padding:32,borderRadius:20,background:"#fff",boxShadow:"0 12px 40px #0000000d"}}><h1 style={{fontSize:24,margin:"0 0 12px"}}>هذا الدومين غير مربوط بمتجر نشط</h1><p style={{color:"#64748b",lineHeight:1.9,margin:0}}>تأكد من صحة رابط المتجر أو تواصل مع إدارة المتجر.</p></section></main>}
