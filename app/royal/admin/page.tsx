@@ -39,21 +39,3 @@ w.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="
 w.document.close();
 };
 return <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>رقم الطلب</th><th>العميل</th><th>تفاصيل الطلب</th><th>التاريخ</th><th>الإجمالي</th><th>الحالة</th><th>طباعة</th>{allowDelete&&<th>إجراء</th>}</tr></thead><tbody>{rows.map(o=><tr key={o._id}><td>{o.orderNumber}</td><td>{o.customerName}<br/>{o.customerPhone}</td><td><div>{(o.items||[]).map(i=>i.name+" × "+i.quantity).join("، ")||"—"}</div><small>{o.fulfillmentType==="delivery"?"توصيل":"استلام من المتجر"} · {o.paymentMethod==="cliq"?"CliQ":"كاش"}{o.deliveryAddress?" · "+o.deliveryAddress:""}{o.prepTimeMinutes?" · تحضير "+o.prepTimeMinutes+" د":""}</small>{o.notes&&<div><small>ملاحظات: {o.notes}</small></div>}{o.rejectionReason&&<div><small>سبب الإلغاء: {o.rejectionReason}</small></div>}</td><td>{new Date(o.createdAt).toLocaleString("ar-JO")}</td><td>{o.total.toFixed(2)} د.أ</td><td><select className="admin-status-select" value={o.status} onChange={e=>status(o._id,e.target.value)}><option value="new">جديد</option><option value="confirmed">مؤكد</option><option value="preparing">قيد التحضير</option><option value="completed">مكتمل</option><option value="cancelled">ملغي</option></select></td><td><div style={{display:"flex",gap:5,flexWrap:"wrap"}}><button type="button" className="cat" onClick={()=>printOrder(o)} aria-label={"طباعة فاتورة "+o.orderNumber}><Printer size={15}/> فاتورة</button><button type="button" className="cat" onClick={()=>printOrder(o,true)} aria-label={"طباعة تذكرة مطبخ "+o.orderNumber}>تذكرة مطبخ</button></div></td>{allowDelete&&<td><button type="button" className="cat danger" onClick={()=>onDelete?.(o._id)} aria-label={"حذف الطلب "+o.orderNumber}><Trash2 size={15}/> حذف</button></td>}</tr>)}</tbody></table>{!rows.length&&<p>لا توجد طلبات حتى الآن.</p>}</div>}
-
-/* Store admin bottom navigation and compact drawer */
-@media(max-width:760px){
- .admin-top-actions{display:flex;align-items:center;gap:6px}
- .admin-more-trigger{display:flex!important;align-items:center;justify-content:center;width:42px;height:42px;padding:0!important}
- .admin-mobile-dock{display:flex!important;position:fixed!important;right:0!important;left:0!important;bottom:0!important;width:100%!important;transform:none!important;justify-content:space-around!important;gap:2px!important;overflow:visible!important;z-index:100!important}
- .admin-mobile-dock button{flex:1 1 20%!important;min-width:0!important;max-width:none!important;min-height:58px!important;padding:5px 2px!important;gap:4px!important;font-size:10px!important}
- .admin-mobile-dock button.active{color:#17623d!important;background:#eaf5ec!important;border-radius:12px}
- .admin-more-backdrop{display:block;position:fixed;inset:0;z-index:120;border:0;background:#0b172a80;backdrop-filter:blur(2px)}
- .admin-more-drawer{display:flex;position:fixed;z-index:125;right:0;top:0;bottom:0;width:min(84vw,330px);padding:18px 14px calc(20px + env(safe-area-inset-bottom));flex-direction:column;gap:8px;background:#fff;box-shadow:-16px 0 40px #0002;overflow-y:auto}
- .admin-more-head{display:flex;align-items:center;justify-content:space-between;padding:4px 4px 16px;margin-bottom:8px;border-bottom:1px solid #eee}
- .admin-more-head b{font-size:17px}
- .admin-more-drawer>button{display:flex;align-items:center;gap:12px;min-height:48px;padding:12px 14px;border:0;border-radius:12px;background:#f7f8f6;color:#344536;text-align:right;font-weight:700}
- .admin-more-drawer>button.active{background:#eaf5ec;color:#17623d}
- .admin-dashboard-page{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}
- .admin-shell{padding-bottom:12px}
- .admin-dashboard-page .admin-topbar{position:sticky;top:0;z-index:30;background:#f7f5f0;padding:8px 0}
-}
