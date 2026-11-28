@@ -8,7 +8,7 @@ export async function middleware(req:NextRequest){
  const host=hostOf(req);
  if(isPlatformHost(host))return NextResponse.next();
  const path=req.nextUrl.pathname;
- if(path.startsWith("/api/")||path.startsWith("/_next/")||path==="/favicon.ico"||path==="/robots.txt"||path==="/sitemap.xml"||/\\.[a-z0-9]{2,8}$/i.test(path))return NextResponse.next();
+ if(path.startsWith("/api/")||path.startsWith("/_next/")||path==="/favicon.ico"||path==="/robots.txt"||path==="/sitemap.xml"||/\.[a-z0-9]{2,8}$/i.test(path))return NextResponse.next();
  const lookup=new URL("/api/internal/domain-resolve",req.url);
  lookup.searchParams.set("host",host);
  try{
