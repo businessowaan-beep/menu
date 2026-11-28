@@ -112,8 +112,16 @@ delete (planFields as any)._id;
         endpoint.searchParams.set("teamId", teamId);
         const vr = await fetch(endpoint, { method: "POST", headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" }, body: JSON.stringify({ name: vercelDomain }), cache: "no-store" });
         const vd = await vr.json().catch(() => ({}));
-        if (!vr.ok && vr.status !== 409) return NextResponse.json({ error: vd?.error?.message || "تعذر إضافة " + vercelDomain + " إلى مشروع Vercel.", vercel: vd }, { status: vr.status });
-        results.push({ domain: vercelDomain, verified: vd.verified === true, verification: vd.verification || [] });
+        let domainInfo = vd;
+        if (!vr.ok) {
+          if (vr.status !== 409) return NextResponse.json({ error: vd?.error?.message || "تعذر إضافة " + vercelDomain + " إلى مشروع Vercel.", vercel: vd }, { status: vr.status });
+          const checkUrl = new URL("https://api.vercel.com/v9/projects/" + encodeURIComponent(projectId) + "/domains/" + encodeURIComponent(vercelDomain));
+          checkUrl.searchParams.set("teamId", teamId);
+          const check = await fetch(checkUrl, { headers: { Authorization: "Bearer " + token }, cache: "no-store" });
+          domainInfo = await check.json().catch(() => ({}));
+          if (!check.ok || domainInfo.projectId !== projectId) return NextResponse.json({ error: "الدومين " + vercelDomain + " مستخدم أو مربوط بمشروع Vercel آخر. لم يتم ربطه بهذا المتجر." }, { status: 409 });
+        }
+        results.push({ domain: vercelDomain, verified: domainInfo.verified === true, verification: domainInfo.verification || [] });
       }
       const primary = results[0];
       const record = { slug, domain, status: primary.verified ? "active" : "pending_dns", verified: primary.verified, vercelConfigured: true, vercelDomains: results, verification: primary.verification, sslStatus: primary.verified ? "vercel_managed" : "pending", updatedAt: now, createdAt: existing?.createdAt || now };
