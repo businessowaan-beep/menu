@@ -5,8 +5,8 @@ export const runtime="nodejs";
 export async function POST(req:NextRequest){
  if(!await isSuperAdmin())return NextResponse.json({error:"غير مصرح"},{status:401});
  const body=await req.json().catch(()=>({}));
- const domain=String(body.domain||"").trim().toLowerCase().replace(/^www\\./,"");
- if(!/^(?=.{4,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,}$/.test(domain))return NextResponse.json({error:"الدومين غير صحيح"},{status:400});
+ const domain=String(body.domain||"").trim().toLowerCase().replace(/^www\./,"");
+ if(!/^(?=.{4,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/.test(domain))return NextResponse.json({error:"الدومين غير صحيح"},{status:400});
  const token=process.env.VERCEL_TOKEN,projectId=process.env.VERCEL_PROJECT_ID||"prj_3GKoNmjRyyZJGn0kce07U7smdWRh",teamId=process.env.VERCEL_TEAM_ID||"team_4q5GjTDCTgrNb6R3ec37hPEf";
  if(!token)return NextResponse.json({error:"أضف VERCEL_TOKEN إلى إعدادات Vercel أولاً."},{status:503});
  try{
