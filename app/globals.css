@@ -531,3 +531,18 @@ html,body{max-width:100%;overflow-x:hidden}
  .category-browser .category-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
  .category-browser .category-chip{width:100%;min-width:0;min-height:48px;padding:10px 8px;border-radius:13px;font-size:12px;line-height:1.45;text-align:center;overflow-wrap:anywhere}
 }
+
+/* Compact mobile category selector: keep products visible above the fold */
+@media(max-width:760px){
+ .category-browser{margin:0 0 8px;padding:0 14px}
+ .category-browser-heading{margin:0 0 6px;gap:8px}
+ .category-browser-heading strong{font-size:11px}
+ .category-browser-heading span{font-size:9px}
+ .category-browser .category-rail{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;padding:0 0 5px;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+ .category-browser .category-rail::-webkit-scrollbar{display:none}
+ .category-browser .category-chip{flex:0 0 auto;width:auto;min-width:0;min-height:35px;padding:7px 13px;border-radius:999px;font-size:10px;line-height:1.2;white-space:nowrap;overflow-wrap:normal}
+}
+@media(max-width:380px){
+ .category-browser{padding-right:11px;padding-left:11px}
+ .category-browser .category-chip{min-height:33px;padding:6px 11px;font-size:9px}
+}
