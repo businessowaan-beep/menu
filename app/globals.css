@@ -468,3 +468,23 @@ html,body{max-width:100%;overflow-x:hidden}
 
 /* Store checkout: delivery, pickup and payment choices */
 .checkout-choice-group{display:grid;gap:8px;padding:12px;border:1px solid #e8e2d8;border-radius:13px;background:#fcfbf8}.checkout-choice-group>b{font-size:11px;color:#554d40}.checkout-choice-group select{display:block;width:100%;height:43px;border:1px solid #e8e2d8;border-radius:10px;padding:0 12px;background:#fff;color:#29251d;font:inherit;font-size:12px}.checkout-choice-group label{display:block;font-size:10px;font-weight:700;color:#625d54}.checkout-choice-group input{display:block;width:100%;height:43px;margin-top:6px;border:1px solid #e8e2d8;border-radius:11px;padding:0 13px;outline:0;font-size:11px;background:#fff}.checkout-choice-group input:focus,.checkout-choice-group select:focus{border-color:#d5ae5b}.checkout-choice-static{padding:11px 12px;border-radius:10px;background:#f3efe5;color:#65532c;font-size:12px;font-weight:700}.checkout-info-note{padding:10px 12px;border-radius:10px;background:#f3f7f2;color:#47634b;font-size:11px;line-height:1.8}.checkout-cliq-card{display:grid;gap:7px;padding:13px;border:1px solid #e5d7ad;border-radius:12px;background:#fff9e8;color:#51421c;font-size:11px;line-height:1.8;overflow-wrap:anywhere}.checkout-cliq-card>b{font-size:12px}.checkout-cliq-card small{color:#75663f;line-height:1.8}.admin-order-settings{display:grid;gap:10px;margin:22px 0;padding:18px;border:1px solid #e6e1d6;border-radius:14px;background:#fcfbf8}.admin-order-settings h3{margin:4px 0;font-size:16px}.admin-order-settings .admin-field-label{display:flex;align-items:center;gap:9px}.admin-order-settings input[type=checkbox]{width:18px;height:18px;accent-color:#267448}.admin-cliq-fields{display:grid;gap:10px;padding:14px;border-radius:12px;background:#f5f2e8}.admin-cliq-fields textarea{min-height:85px;padding:10px;resize:vertical}
+
+
+/* Store admin bottom navigation and compact drawer */
+@media(max-width:760px){
+ .admin-top-actions{display:flex;align-items:center;gap:6px}
+ .admin-more-trigger{display:flex!important;align-items:center;justify-content:center;width:42px;height:42px;padding:0!important}
+ .admin-mobile-dock{display:flex!important;position:fixed!important;right:0!important;left:0!important;bottom:0!important;width:100%!important;transform:none!important;justify-content:space-around!important;gap:2px!important;overflow:visible!important;z-index:100!important}
+ .admin-mobile-dock button{flex:1 1 20%!important;min-width:0!important;max-width:none!important;min-height:58px!important;padding:5px 2px!important;gap:4px!important;font-size:10px!important}
+ .admin-mobile-dock button.active{color:#17623d!important;background:#eaf5ec!important;border-radius:12px}
+ .admin-more-backdrop{display:block;position:fixed;inset:0;z-index:120;border:0;background:#0b172a80;backdrop-filter:blur(2px)}
+ .admin-more-drawer{display:flex;position:fixed;z-index:125;right:0;top:0;bottom:0;width:min(84vw,330px);padding:18px 14px calc(20px + env(safe-area-inset-bottom));flex-direction:column;gap:8px;background:#fff;box-shadow:-16px 0 40px #0002;overflow-y:auto}
+ .admin-more-head{display:flex;align-items:center;justify-content:space-between;padding:4px 4px 16px;margin-bottom:8px;border-bottom:1px solid #eee}
+ .admin-more-head b{font-size:17px}
+ .admin-more-drawer>button{display:flex;align-items:center;gap:12px;min-height:48px;padding:12px 14px;border:0;border-radius:12px;background:#f7f8f6;color:#344536;text-align:right;font-weight:700}
+ .admin-more-drawer>button.active{background:#eaf5ec;color:#17623d}
+ .admin-dashboard-page{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}
+ .admin-shell{padding-bottom:12px}
+ .admin-dashboard-page .admin-topbar{position:sticky;top:0;z-index:30;background:#f7f5f0;padding:8px 0}
+}
+
