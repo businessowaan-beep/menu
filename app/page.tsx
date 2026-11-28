@@ -294,7 +294,7 @@ export default function SuperAdminPage(){
 
 .superadmin-content section.superadmin-editor-panel{position:fixed;z-index:130;inset:30px;width:min(980px,calc(100vw - 60px));max-height:calc(100dvh - 60px);overflow-y:auto;margin:auto;box-shadow:0 0 0 100vmax #07170f88,0 24px 70px #0003}
 @media(max-width:760px){.superadmin-content section.superadmin-editor-panel{inset:8px 8px calc(8px + env(safe-area-inset-bottom))!important;width:auto!important;max-height:none!important}}
-\n`}
+
 /* Redesigned super-admin sign-in */
 .superadmin-login-v2{min-height:100dvh;position:relative;overflow:hidden;display:grid;place-items:center;padding:clamp(18px,4vw,56px);background:radial-gradient(ellipse at 12% 8%,#235b3e 0%,transparent 36%),radial-gradient(ellipse at 90% 90%,#c49a3d30 0%,transparent 34%),linear-gradient(135deg,#0b2419,#123d2a 58%,#0b2118);font-family:Arial,sans-serif;color:#fff}
 .login-v2-glow{position:absolute;border-radius:50%;filter:blur(1px);pointer-events:none}.login-v2-glow-one{width:360px;height:360px;top:-170px;left:-100px;border:1px solid #f2d47a28;box-shadow:0 0 0 35px #f2d47a08,0 0 0 75px #f2d47a05}.login-v2-glow-two{width:460px;height:460px;bottom:-270px;right:-160px;border:1px solid #ffffff16;box-shadow:0 0 0 45px #ffffff08,0 0 0 90px #ffffff05}
