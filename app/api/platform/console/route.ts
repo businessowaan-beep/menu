@@ -95,7 +95,7 @@ delete (planFields as any)._id;
 
     if (body.action === "saveDomain") {
       const slug = clean(body.slug, 48).toLowerCase();
-      const domain = clean(body.domain, 253).toLowerCase().replace(/^https?:\\/\\//, "").replace(/\\/$/, "").replace(/^www\\./, "");
+      const domain = clean(body.domain, 253).toLowerCase().replace(/^https?:\/\//, "").replace(/\/$/, "").replace(/^www\./, "");
       if (!slugPattern.test(slug) || !domainPattern.test(domain)) return NextResponse.json({ error: "أدخل رابط متجر صحيحاً ودوميناً صحيحاً بدون https أو مسارات." }, { status: 400 });
       const tenant = await db.collection("tenants").findOne({ _id: slug } as any);
       if (!tenant) return NextResponse.json({ error: "المتجر المحدد غير موجود." }, { status: 404 });
