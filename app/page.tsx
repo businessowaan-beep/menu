@@ -241,6 +241,34 @@ export default function SuperAdminPage(){
  .superadmin-sidebar{background:#124b32!important}
  .superadmin-sidebar nav button[style*="#267448"]{background:#267448!important}
 }
+
+/* Final mobile shell overrides */
+@media(max-width:760px){
+ .superadmin-shell{display:block!important;min-height:100dvh;padding-bottom:calc(76px + env(safe-area-inset-bottom))!important}
+ .superadmin-sidebar{position:fixed!important;z-index:110!important;top:0!important;right:0!important;bottom:0!important;width:min(84vw,330px)!important;height:100dvh!important;min-height:100dvh!important;overflow-y:auto!important;padding:18px 14px!important;transform:translateX(110%);transition:transform .24s ease;box-shadow:-18px 0 50px #0b172a30}
+ .superadmin-shell.menu-open .superadmin-sidebar{transform:translateX(0)}
+ .superadmin-drawer-overlay{display:block;position:fixed;inset:0;z-index:105;border:0;background:#081b12a8;backdrop-filter:blur(3px)}
+ .superadmin-sidebar nav{display:grid!important;overflow:visible!important;padding:12px 0!important}
+ .superadmin-sidebar nav button{width:100%;justify-content:flex-start!important;min-height:46px!important;padding:12px 14px!important;font-size:14px!important}
+ .superadmin-sidebar nav button span{display:block!important}
+ .superadmin-sidebar>div:nth-child(2){display:block!important}
+ .superadmin-sidebar>div[style*="#1b5a3b"]{display:block!important}
+ .superadmin-sidebar>button{position:static!important;width:100%!important;height:auto!important;min-height:46px!important;margin-top:14px!important;font-size:14px!important;justify-content:flex-start!important}
+ .superadmin-content{width:100%!important;max-width:100vw!important;padding:16px 13px 28px!important}
+ .superadmin-menu-trigger{display:inline-flex!important;flex:0 0 42px}
+ .superadmin-mobile-dock{display:flex;position:fixed;z-index:90;bottom:0;right:0;left:0;justify-content:space-around;align-items:center;gap:2px;padding:7px 8px max(7px,env(safe-area-inset-bottom));background:#fff;border-top:1px solid #dcecdf;box-shadow:0 -8px 28px #17452f12}
+ .superadmin-mobile-dock button{display:flex;flex:1;min-width:0;min-height:54px;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;border-radius:12px;background:transparent;color:#718477;font-size:10px;font-weight:700}
+ .superadmin-mobile-dock button.active{background:#eaf5ec;color:#17623d}
+ .superadmin-create-fab{display:flex;position:fixed;z-index:95;left:16px;bottom:calc(88px + env(safe-area-inset-bottom));align-items:center;gap:8px;padding:13px 17px;border:0;border-radius:999px;background:#17623d;color:white;font-size:13px;font-weight:800;box-shadow:0 9px 28px #124b3245}
+ .superadmin-content section.superadmin-editor-panel{position:fixed!important;z-index:130!important;inset:8px 8px calc(8px + env(safe-area-inset-bottom))!important;width:auto!important;max-width:none!important;max-height:none!important;overflow-y:auto!important;margin:0!important;border-radius:20px!important;box-shadow:0 0 0 100vmax #07170fc9,0 20px 70px #0003!important;padding:18px!important}
+ .superadmin-content:has(.superadmin-editor-panel) .superadmin-mobile-dock,.superadmin-content:has(.superadmin-editor-panel)~.superadmin-mobile-dock{display:none!important}
+ .superadmin-shell:has(.superadmin-editor-panel) .superadmin-create-fab{display:none!important}
+ .superadmin-login{display:flex!important;flex-direction:column!important;justify-content:center!important;min-height:100dvh!important;padding:18px!important;gap:18px}
+ .superadmin-login>section:first-child{display:block!important;min-height:auto!important;padding:8px 4px!important;background:transparent!important}
+ .superadmin-login>section:first-child>div>div:nth-child(2),.superadmin-login>section:first-child>div:last-child{display:none!important}
+ .superadmin-login>section:last-child{display:grid!important;place-items:center!important;min-height:auto!important;padding:0!important;background:transparent!important}
+ .superadmin-login>section:last-child>div{width:100%!important;max-width:460px!important;padding:25px!important;border-radius:24px!important}
+}
 \n`}</style>
  </main>;
 }
