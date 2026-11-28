@@ -12,8 +12,9 @@ export async function GET(req: NextRequest) {
     const db = await getDb();
     const tenant = await db.collection("tenants").findOne({ _id: slug } as any);
     if (!tenant) return NextResponse.json({ error: "المتجر غير موجود" }, { status: 404 });
+    const customDomain = await db.collection("platform_domains").findOne({ slug, status: "active", verified: true });
     const origin = process.env.NEXT_PUBLIC_APP_URL || "https://menustore.vercel.app";
-    const menuUrl = new URL("/" + slug, origin).toString();
+    const menuUrl = customDomain?.domain ? "https://" + String(customDomain.domain) : new URL("/" + slug, origin).toString();
     if (format === "svg") {
       const svg = await QRCode.toString(menuUrl, { type: "svg", width: 900, margin: 2, errorCorrectionLevel: "H" });
       return new NextResponse(svg, { headers: { "Content-Type": "image/svg+xml; charset=utf-8", "Content-Disposition": 'attachment; filename="' + slug + '-menu-qr.svg"', "Cache-Control": "private, no-store" } });
