@@ -4,8 +4,8 @@ import {getActiveTenant} from "@/lib/tenant";
 export const runtime="nodejs";
 export const dynamic="force-dynamic";
 export async function GET(req:NextRequest){
- const host=String(req.nextUrl.searchParams.get("host")||"").trim().toLowerCase().replace(/^www\\./,"");
- if(!/^(?=.{4,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,}$/.test(host))return NextResponse.json({error:"Invalid host"},{status:400,headers:{"Cache-Control":"no-store"}});
+ const host=String(req.nextUrl.searchParams.get("host")||"").trim().toLowerCase().replace(/^www\./,"");
+ if(!/^(?=.{4,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/.test(host))return NextResponse.json({error:"Invalid host"},{status:400,headers:{"Cache-Control":"no-store"}});
  try{
   const db=await getDb();
   const record=await db.collection("platform_domains").findOne({domain:host,status:"active",verified:true});
