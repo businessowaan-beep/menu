@@ -15,7 +15,7 @@ export async function GET() {
     const soon = new Date(now.getTime() + 30 * 86400000).toISOString();
     const [tenants, plans, domains, themes, announcements, tickets, totalOrders, revenue, recentRevenue, totalProducts, expiring] = await Promise.all([
       db.collection("tenants").find({}).project({ adminPasswordHash: 0 }).sort({ createdAt: -1 }).toArray(),
-      db.collection("platform_plans").find({}).sort({ sortOrder: 1, createdAt: 1 }).toArray(),
+      db.collection("platform_plans").find({ deletedAt: { $exists: false } }).sort({ sortOrder: 1, createdAt: 1 }).toArray(),
       db.collection("platform_domains").find({}).sort({ createdAt: -1 }).toArray(),
       db.collection("platform_themes").find({}).sort({ createdAt: -1 }).toArray(),
       db.collection("platform_announcements").find({}).sort({ createdAt: -1 }).limit(50).toArray(),
@@ -185,5 +185,23 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "العملية غير مدعومة." }, { status: 400 });
   } catch {
     return NextResponse.json({ error: "تعذر تحديث البيانات." }, { status: 500 });
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  if (!await isSuperAdmin()) return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
+  try {
+    const body = await req.json();
+    const id = clean(body.id, 48).toLowerCase();
+    if (!id) return NextResponse.json({ error: "معرّف الباقة غير صحيح." }, { status: 400 });
+    const db = await getDb();
+    const plan = await db.collection("platform_plans").findOne({ _id: id } as any);
+    if (!plan) return NextResponse.json({ error: "الباقة غير موجودة." }, { status: 404 });
+    const now = new Date().toISOString();
+    await db.collection("platform_plans").updateOne({ _id: id } as any, { $set: { active: false, deletedAt: now, updatedAt: now } });
+    await db.collection("platform_activity").insertOne({ type: "plan_archived", planId: id, storeName: plan.name, createdAt: now });
+    return NextResponse.json({ ok: true });
+  } catch {
+    return NextResponse.json({ error: "تعذر حذف الباقة." }, { status: 500 });
   }
 }
