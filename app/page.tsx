@@ -269,6 +269,9 @@ export default function SuperAdminPage(){
  .superadmin-login>section:last-child{display:grid!important;place-items:center!important;min-height:auto!important;padding:0!important;background:transparent!important}
  .superadmin-login>section:last-child>div{width:100%!important;max-width:460px!important;padding:25px!important;border-radius:24px!important}
 }
+
+.superadmin-content section.superadmin-editor-panel{position:fixed;z-index:130;inset:30px;width:min(980px,calc(100vw - 60px));max-height:calc(100dvh - 60px);overflow-y:auto;margin:auto;box-shadow:0 0 0 100vmax #07170f88,0 24px 70px #0003}
+@media(max-width:760px){.superadmin-content section.superadmin-editor-panel{inset:8px 8px calc(8px + env(safe-area-inset-bottom))!important;width:auto!important;max-height:none!important}}
 \n`}</style>
  </main>;
 }
